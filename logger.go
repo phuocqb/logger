@@ -36,10 +36,10 @@ const (
 
 // Severity tags.
 const (
-	tagInfo    = "INFO : "
-	tagWarning = "WARN : "
-	tagError   = "ERROR: "
-	tagFatal   = "FATAL: "
+	tagInfo    = "" //"INFO : "
+	tagWarning = "" //"WARN : "
+	tagError   = "" //"ERROR: "
+	tagFatal   = "" //"FATAL: "
 )
 
 const (
