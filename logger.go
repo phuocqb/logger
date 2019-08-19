@@ -21,7 +21,10 @@ import (
 	"io"
 	"log"
 	"os"
+	"path/filepath"
+	"runtime"
 	"sync"
+	"time"
 )
 
 type severity int
@@ -101,6 +104,7 @@ func Init(name string, verbose, systemLog bool, logFile io.Writer) *Logger {
 	}
 
 	l := Logger{
+		name:       name,
 		infoLog:    log.New(io.MultiWriter(iLogs...), tagInfo, flags),
 		warningLog: log.New(io.MultiWriter(wLogs...), tagWarning, flags),
 		errorLog:   log.New(io.MultiWriter(eLogs...), tagError, flags),
@@ -134,6 +138,7 @@ func Close() {
 // A Logger represents an active logging object. Multiple loggers can be used
 // simultaneously even if they are using the same same writers.
 type Logger struct {
+	name        string
 	infoLog     *log.Logger
 	warningLog  *log.Logger
 	errorLog    *log.Logger
@@ -391,7 +396,34 @@ func Fatalln(v ...interface{}) {
 // and ends with os.Exit(1).
 // Arguments are handled in the manner of fmt.Printf.
 func Fatalf(format string, v ...interface{}) {
-	defaultLogger.output(sFatal, 0, fmt.Sprintf(format, v...))
+	defaultLogger.output(sFatal, 0, prefix(defaultLogger.name, fmt.Sprintf(format, v...)))
 	defaultLogger.Close()
 	os.Exit(1)
+}
+
+func prefix(name string, v ...interface{}) string {
+	fileName := ""
+	lineNumber := 0
+	funcName := ""
+	if pc, file, line, ok := runtime.Caller(2); ok {
+		fileName = file
+		lineNumber = line
+		f := runtime.FuncForPC(pc)
+		funcName = filepath.Ext(f.Name())
+
+		for i := len(file) - 1; i > 0; i-- {
+			if file[i] == '/' {
+				fileName = file[i+1:]
+				break
+			}
+		}
+
+		if len(funcName) > 0 && funcName[0] == '.' {
+			funcName = funcName[1:]
+		}
+	}
+
+	prefixString := []interface{}{time.Now().Format("2006-01-02 15:04:05"), name, fileName, lineNumber, funcName}
+	v = append(prefixString, fmt.Sprint(v...))
+	return fmt.Sprintf("[%v][%v][%v:%v]: %v\n", v...)
 }
