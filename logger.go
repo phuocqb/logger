@@ -426,5 +426,5 @@ func prefix(name string, v ...interface{}) string {
 
 	prefixString := []interface{}{time.Now().Format("2006-01-02 15:04:05"), name, fileName, lineNumber, funcName}
 	v = append(prefixString, fmt.Sprint(v...))
-	return fmt.Sprintf("[%v][%v][%v:%v]: %v\n", v...)
+	return fmt.Sprintf("[%v][%v][%v:%v][%v]: %v\n", v...)
 }
