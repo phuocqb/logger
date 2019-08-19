@@ -297,80 +297,80 @@ func SetFlags(flag int) {
 // Info uses the default logger and logs with the Info severity.
 // Arguments are handled in the manner of fmt.Print.
 func Info(v ...interface{}) {
-	defaultLogger.output(sInfo, 0, fmt.Sprint(v...))
+	defaultLogger.output(sInfo, 0, prefix(defaultLogger.name, fmt.Sprint(v...)))
 }
 
 // InfoDepth acts as Info but uses depth to determine which call frame to log.
 // InfoDepth(0, "msg") is the same as Info("msg").
 func InfoDepth(depth int, v ...interface{}) {
-	defaultLogger.output(sInfo, depth, fmt.Sprint(v...))
+	defaultLogger.output(sInfo, depth, prefix(defaultLogger.name, fmt.Sprint(v...)))
 }
 
 // Infoln uses the default logger and logs with the Info severity.
 // Arguments are handled in the manner of fmt.Println.
 func Infoln(v ...interface{}) {
-	defaultLogger.output(sInfo, 0, fmt.Sprintln(v...))
+	defaultLogger.output(sInfo, 0, prefix(defaultLogger.name, fmt.Sprintln(v...)))
 }
 
 // Infof uses the default logger and logs with the Info severity.
 // Arguments are handled in the manner of fmt.Printf.
 func Infof(format string, v ...interface{}) {
-	defaultLogger.output(sInfo, 0, fmt.Sprintf(format, v...))
+	defaultLogger.output(sInfo, 0, prefix(defaultLogger.name, fmt.Sprintf(format, v...)))
 }
 
 // Warning uses the default logger and logs with the Warning severity.
 // Arguments are handled in the manner of fmt.Print.
 func Warning(v ...interface{}) {
-	defaultLogger.output(sWarning, 0, fmt.Sprint(v...))
+	defaultLogger.output(sWarning, 0, prefix(defaultLogger.name, fmt.Sprint(v...)))
 }
 
 // WarningDepth acts as Warning but uses depth to determine which call frame to log.
 // WarningDepth(0, "msg") is the same as Warning("msg").
 func WarningDepth(depth int, v ...interface{}) {
-	defaultLogger.output(sWarning, depth, fmt.Sprint(v...))
+	defaultLogger.output(sWarning, depth, prefix(defaultLogger.name, fmt.Sprint(v...)))
 }
 
 // Warningln uses the default logger and logs with the Warning severity.
 // Arguments are handled in the manner of fmt.Println.
 func Warningln(v ...interface{}) {
-	defaultLogger.output(sWarning, 0, fmt.Sprintln(v...))
+	defaultLogger.output(sWarning, 0, prefix(defaultLogger.name, fmt.Sprintln(v...)))
 }
 
 // Warningf uses the default logger and logs with the Warning severity.
 // Arguments are handled in the manner of fmt.Printf.
 func Warningf(format string, v ...interface{}) {
-	defaultLogger.output(sWarning, 0, fmt.Sprintf(format, v...))
+	defaultLogger.output(sWarning, 0, prefix(defaultLogger.name, fmt.Sprintf(format, v...)))
 }
 
 // Error uses the default logger and logs with the Error severity.
 // Arguments are handled in the manner of fmt.Print.
 func Error(v ...interface{}) {
-	defaultLogger.output(sError, 0, fmt.Sprint(v...))
+	defaultLogger.output(sError, 0, prefix(defaultLogger.name, fmt.Sprint(v...)))
 }
 
 // ErrorDepth acts as Error but uses depth to determine which call frame to log.
 // ErrorDepth(0, "msg") is the same as Error("msg").
 func ErrorDepth(depth int, v ...interface{}) {
-	defaultLogger.output(sError, depth, fmt.Sprint(v...))
+	defaultLogger.output(sError, depth, prefix(defaultLogger.name, fmt.Sprint(v...)))
 }
 
 // Errorln uses the default logger and logs with the Error severity.
 // Arguments are handled in the manner of fmt.Println.
 func Errorln(v ...interface{}) {
-	defaultLogger.output(sError, 0, fmt.Sprintln(v...))
+	defaultLogger.output(sError, 0, prefix(defaultLogger.name, fmt.Sprintln(v...)))
 }
 
 // Errorf uses the default logger and logs with the Error severity.
 // Arguments are handled in the manner of fmt.Printf.
 func Errorf(format string, v ...interface{}) {
-	defaultLogger.output(sError, 0, fmt.Sprintf(format, v...))
+	defaultLogger.output(sError, 0, prefix(defaultLogger.name, fmt.Sprintf(format, v...)))
 }
 
 // Fatal uses the default logger, logs with the Fatal severity,
 // and ends with os.Exit(1).
 // Arguments are handled in the manner of fmt.Print.
 func Fatal(v ...interface{}) {
-	defaultLogger.output(sFatal, 0, fmt.Sprint(v...))
+	defaultLogger.output(sFatal, 0, prefix(defaultLogger.name, fmt.Sprint(v...)))
 	defaultLogger.Close()
 	os.Exit(1)
 }
@@ -378,7 +378,7 @@ func Fatal(v ...interface{}) {
 // FatalDepth acts as Fatal but uses depth to determine which call frame to log.
 // FatalDepth(0, "msg") is the same as Fatal("msg").
 func FatalDepth(depth int, v ...interface{}) {
-	defaultLogger.output(sFatal, depth, fmt.Sprint(v...))
+	defaultLogger.output(sFatal, depth, prefix(defaultLogger.name, fmt.Sprint(v...)))
 	defaultLogger.Close()
 	os.Exit(1)
 }
@@ -387,7 +387,7 @@ func FatalDepth(depth int, v ...interface{}) {
 // and ends with os.Exit(1).
 // Arguments are handled in the manner of fmt.Println.
 func Fatalln(v ...interface{}) {
-	defaultLogger.output(sFatal, 0, fmt.Sprintln(v...))
+	defaultLogger.output(sFatal, 0, prefix(defaultLogger.name, fmt.Sprintln(v...)))
 	defaultLogger.Close()
 	os.Exit(1)
 }
